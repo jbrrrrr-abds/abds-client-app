@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { PageData } from './$types';
   type PrismicObject = {
-    data: any,
-    designArchive: any;
+    data?: any,
+    designArchive?: any;
   }
 
   export let data: PageData;
