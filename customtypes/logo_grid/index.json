@@ -1,0 +1,35 @@
+{
+	"id": "logo_grid",
+	"label": "Logo Grid",
+	"repeatable": false,
+	"json": {
+		"Main": {
+			"logo_grid_title": {
+				"type": "Text",
+				"config": {
+					"label": "Logo Grid Title",
+					"placeholder": "You Are In Good Hands"
+				}
+			},
+			"logos": {
+				"type": "Group",
+				"config": {
+					"fields": {
+						"logo": {
+							"type": "Image",
+							"config": {
+								"constraint": {},
+								"thumbnails": [],
+								"label": "Logo"
+							}
+						}
+					},
+					"label": "Logos"
+				}
+			}
+		}
+	},
+	"hash": "5b283258c3ee92453e50c6d6cb0ee330",
+	"status": true,
+	"format": "custom"
+}

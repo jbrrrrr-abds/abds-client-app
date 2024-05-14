@@ -1,0 +1,47 @@
+{
+	"id": "marquee",
+	"label": "Marquee",
+	"repeatable": false,
+	"json": {
+		"Main": {
+			"first_text_content": {
+				"type": "Text",
+				"config": {
+					"label": "First Text Content",
+					"placeholder": "Let's Make Magic"
+				}
+			},
+			"second_text_content": {
+				"type": "Text",
+				"config": {
+					"label": "Second Text Content",
+					"placeholder": "Time to Make Magic"
+				}
+			},
+			"third_text_content": {
+				"type": "Text",
+				"config": {
+					"label": "Third Text Content",
+					"placeholder": "Sparkle Bros"
+				}
+			},
+			"link_text": {
+				"type": "Text",
+				"config": {
+					"label": "Link Text",
+					"placeholder": "Let's Go"
+				}
+			},
+			"link": {
+				"type": "Link",
+				"config": {
+					"label": "Link",
+					"select": null
+				}
+			}
+		}
+	},
+	"hash": "fef0004f326a51a471be9e858d0bb0a3",
+	"status": true,
+	"format": "custom"
+}

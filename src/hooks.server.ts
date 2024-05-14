@@ -4,6 +4,7 @@ import {
 } from "$env/static/public";
 import { createServerClient } from "@supabase/ssr";
 import type { Handle } from "@sveltejs/kit";
+import type { User } from "@supabase/supabase-js";
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(
@@ -38,8 +39,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 			// JWT validation has failed
 			return { session: null, user: null };
 		}
+    let prismic;
+    // query Supabase to get the Prismic slug on the auth'd user account
+    if (user && user.role === 'authenticated') {
+      prismic = await event.locals.supabase.from('users').select("prismicSlug").eq("email", user?.email);
+    }
 
-		return { session, user };
+		return { session, user, prismic };
 	};
 
 	return resolve(event, {

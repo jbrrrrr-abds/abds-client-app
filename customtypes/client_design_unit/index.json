@@ -1,0 +1,10 @@
+{
+	"id": "client_design_unit",
+	"label": "Client Design Unit",
+	"repeatable": true,
+	"json": {
+		"Main": {}
+	},
+	"status": false,
+	"format": "custom"
+}

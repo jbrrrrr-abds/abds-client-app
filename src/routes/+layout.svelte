@@ -1,16 +1,15 @@
 <script lang="ts">
   import "../app.css";
   import { invalidate } from '$app/navigation'
-  import type { Session } from "@supabase/supabase-js"
 	import { onMount } from 'svelte'
   import { Header } from "$lib/components/Header";
   import { Footer } from "$lib/components/Footer";
-	import type { SupabaseClient } from "@supabase/supabase-js";
+	import type { SupabaseClient, Session } from "@supabase/supabase-js";
 
-  export let data: { supabase: SupabaseClient, session: Session }
+  export let data: { supabase: SupabaseClient, session: Session, prismic: any }
 
-  let { supabase, session } = data
-	$: ({ supabase, session } = data)
+  let { supabase, session, prismic } = data
+	$: ({ supabase, session, prismic } = data)
 
   onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
