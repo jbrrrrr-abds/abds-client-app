@@ -1,7 +1,26 @@
-<script>
-	import '../app.css';
-	import { Header } from '$lib/components/Header/';
-	import { Footer } from '$lib/components/Footer/';
+<script lang="ts">
+  import "../app.css";
+  import { invalidate } from '$app/navigation'
+  import type { Session } from "@supabase/supabase-js"
+	import { onMount } from 'svelte'
+  import { Header } from "$lib/components/Header";
+  import { Footer } from "$lib/components/Footer";
+	import type { SupabaseClient } from "@supabase/supabase-js";
+
+  export let data: { supabase: SupabaseClient, session: Session }
+
+  let { supabase, session } = data
+	$: ({ supabase, session } = data)
+
+  onMount(() => {
+		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth')
+			}
+		})
+
+		return () => data.subscription.unsubscribe()
+	})
 </script>
 
 <svelte:head>
