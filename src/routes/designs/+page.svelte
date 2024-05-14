@@ -8,7 +8,7 @@
   export let data: PageData;
 
   const client: PrismicObject = data.data
-  console.log(client.designArchive.data.design_unit);
+  //console.log(client.designArchive.data.design_unit);
 </script>
 
 <section class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
