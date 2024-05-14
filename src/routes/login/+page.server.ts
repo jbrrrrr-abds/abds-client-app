@@ -15,7 +15,7 @@ export const actions: Actions = {
     } else {
       if (data.user && data.user.role === 'authenticated') {
         const prismic = await supabase.from('users').select("prismicSlug").eq("email", data.user?.email);
-        if (prismic.data[0].prismicSlug.length === 0) {
+        if (prismic.data && prismic.data[0].prismicSlug.length === 0) {
           return redirect(303, '/unauthorized')
         }
       }
