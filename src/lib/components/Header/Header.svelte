@@ -2,6 +2,18 @@
   import * as config from '$lib/config'
   import { Logo } from '$lib/components/Logo'
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
+  import { createBrowserClient, createServerClient, isBrowser, parse } from '@supabase/ssr'
+  import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
+  import { redirect } from '@sveltejs/kit'
+  import type { SupabaseClient } from '@supabase/supabase-js'
+
+  const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+  const logout = async () => {
+
+    const { error } = await supabase.auth.signOut();
+    console.log(error);
+    redirect(302, './login')
+  }
 </script>
 
 <header class="w-full bg-brandBlack">
@@ -16,6 +28,7 @@
       <NavLi href="/" class="text-base text-white">Home</NavLi>
       <NavLi href="/about" class="text-base text-white">Designs</NavLi>
       <NavLi href="/docs/components/navbar" class="text-base text-white">Contact</NavLi>
+      <NavLi href="#" on:click={() => logout()} class="text-base text-white underline">Log Out</NavLi>
     </NavUl>
   </Navbar>
 </header>
