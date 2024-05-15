@@ -3,11 +3,8 @@ import { writable } from 'svelte/store'
 
 type DesignUnit = {
   // define the properties of a design unit
-  selected: boolean;
-  id: string;
-    design_name: {
-      text: string
-    }
+  name: string;
+  unit?: {}
   // ...other properties
 };
 

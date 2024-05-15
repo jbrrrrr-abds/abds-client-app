@@ -9,18 +9,22 @@
 
   const selectUnit = (unit: any) => {
     unit.selected = true;
-    $selectedDesigns.push(unit.designName.text);
+    const name = unit.design_name[0].text;
+    $selectedDesigns.push({
+      name: name,
+      unit: unit
+    });
   }
 
   const deselectUnit = (unit: any) => {
     unit.selected = false;
-    const index = $selectedDesigns.findIndex((i) => {
-      return i.design_name.text == unit.design_name.text;
+    const name = unit.design_name[0].text;
+    const index = $selectedDesigns.findIndex((i: any) => {
+      return i.name == name;
     })
     $selectedDesigns.splice(index, 1)
   }
 </script>
-
 <section class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
   {#each client.designArchive.data.design_unit as unit}
     <div class="relative rounded-t-xl design-card border-3 ease-in-out overflow-clip drop-shadow-lg border-collapse group/card border mb-4 transition-all duration-1000 {unit.selected ? 'border-white shadow-black-300' : 'border-transparent shadow-black-200 drop-shadow-sm'}">
@@ -36,7 +40,7 @@
           </Button>
         -->
         {#if !unit.selected}
-          <Button variant="outline" class="h-auto px-3 py-2 text-xs font-bold uppercase transition-colors ease-in-out rounded-full Anton group/button" on:click={() => (unit.selected = !unit.selected)}>
+          <Button variant="outline" class="h-auto px-3 py-2 text-xs font-bold uppercase transition-colors ease-in-out rounded-full Anton group/button" on:click={() => selectUnit(unit)}>
             Select Design
           </Button>
         {:else}
