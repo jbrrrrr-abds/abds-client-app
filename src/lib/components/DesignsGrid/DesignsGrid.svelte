@@ -25,7 +25,7 @@
     $selectedDesigns.splice(index, 1)
   }
 </script>
-<section class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
+<section class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
   {#each client.designArchive.data.design_unit as unit}
     <div class="relative rounded-t-xl design-card border-3 ease-in-out overflow-clip drop-shadow-lg border-collapse group/card border mb-4 transition-all duration-1000 {unit.selected ? 'border-white shadow-black-300' : 'border-transparent shadow-black-200 drop-shadow-sm'}">
       <!-- Image Container -->

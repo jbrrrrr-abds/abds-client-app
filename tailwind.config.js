@@ -14,9 +14,12 @@ export default {
     },
     extend: {
       fontSize: {
-        "xxs": "0.4rem",
-        "xs": "0.6rem",
+        "xxs": "0.5rem",
+        "xs": "0.65rem",
+        "sm": "0.75rem",
         "md": "0.8rem",
+        "xxl": "1.5rem",
+        "xxxl": "2rem"
       },
       colors: {
         border: "hsl(var(--border))",
