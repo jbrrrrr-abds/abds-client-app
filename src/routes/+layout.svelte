@@ -26,7 +26,7 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<div class="flex flex-col justify-between min-h-screen layout">
+<div class="flex flex-col justify-between min-h-screen layout bg-brandWhite">
 	<Header></Header>
 
 	<main class="container flex-grow py-12">
