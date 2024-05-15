@@ -7,8 +7,6 @@
 
   export let client;
 
-  console.log(client.designArchive.data.designUnit);
-
   const selectUnit = (unit: any) => {
     unit.selected = true;
     $selectedDesigns.push(unit.designName.text);
@@ -25,10 +23,10 @@
 
 <section class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
   {#each client.designArchive.data.design_unit as unit}
-    <div class="relative rounded-t-lg design-card overflow-clip group/card border transition-all duration-1000 {unit.selected ? 'border-4 border-white' : 'border-1'}">
+    <div class="relative rounded-t-lg design-card overflow-clip border-collapse group/card border transition-all duration-1000 {unit.selected ? 'border-2 border-white' : 'border-1'}">
       <!-- Image Container -->
       <div class="object-cover overflow-hidden cursor-pointer">
-        <img class="transition duration-700 transform m-w-full group-hover/card:scale-105" src={unit.design_artwork.url} alt={unit.design_name.text} />
+        <img class="transition duration-1000 transform m-w-full group-hover/card:scale-105" src={unit.design_artwork.url} alt={unit.design_name.text} />
       </div>
       <div class="flex flex-row justify-center p-3 bg-white">
       <!-- Button UI for Zoom/Select
@@ -42,7 +40,7 @@
             Select Design
           </Button>
         {:else}
-          <Button variant="outline" class="h-auto px-3 py-1 text-xs font-bold text-white uppercase transition-colors rounded-full bg-gold Anton group/button hover:bg-gold" on:click={() => deselectUnit(unit)}>
+          <Button variant="outline" class="h-auto px-3 py-1 text-xs font-bold text-white uppercase transition-colors rounded-full border-1-gold bg-gold Anton group/button hover:bg-gold" on:click={() => deselectUnit(unit)}>
             SELECTED
           </Button>
         {/if}

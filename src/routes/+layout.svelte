@@ -27,7 +27,7 @@
 </svelte:head>
 
 <div class="flex flex-col justify-between min-h-screen layout bg-brandWhite">
-	<Header></Header>
+	<Header {data}></Header>
 
 	<main class="container flex-grow py-12">
 		<slot></slot>

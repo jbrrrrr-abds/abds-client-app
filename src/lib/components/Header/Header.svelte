@@ -7,7 +7,9 @@
   import { redirect } from '@sveltejs/kit'
   import type { SupabaseClient } from '@supabase/supabase-js'
 
-  const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+  export let data;
+
+  const supabase: SupabaseClient = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
   const logout = async () => {
 
     const { error } = await supabase.auth.signOut();
@@ -25,10 +27,12 @@
     </NavBrand>
     <NavHamburger  />
     <NavUl class="text-base uppercase font-Anton ">
-      <NavLi href="/" class="text-base text-white">Home</NavLi>
-      <NavLi href="/about" class="text-base text-white">Designs</NavLi>
-      <NavLi href="/docs/components/navbar" class="text-base text-white">Contact</NavLi>
-      <NavLi href="#" on:click={() => logout()} class="text-base text-white underline">Log Out</NavLi>
+      <NavLi href="/designs" class="text-base text-white">Designs</NavLi>
+      {#if data.session }
+        <NavLi href="#" on:click={() => logout()} class="text-base text-white">Log Out</NavLi>
+      {:else}
+        <NavLi href="#" on:click={() => redirect(302, '/login')} class="text-base text-white">Log In</NavLi>
+      {/if}
     </NavUl>
   </Navbar>
 </header>

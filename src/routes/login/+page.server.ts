@@ -10,12 +10,12 @@ export const actions: Actions = {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       console.error(error)
-      return redirect(303, './unauthorized')
+      return redirect(303, './login/unauthorized')
     } else {
       if (data.user && data.user.role === 'authenticated') {
         const prismic = await supabase.from('users').select("prismicSlug").eq("email", data.user?.email);
         if (prismic.data && prismic.data[0].prismicSlug.length === 0) {
-          return redirect(303, '/unauthorized')
+          return redirect(303, '/login/unauthorized')
         }
       }
       return redirect(303, '/designs')
