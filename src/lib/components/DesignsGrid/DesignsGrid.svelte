@@ -26,7 +26,7 @@
     <div class="relative rounded-t-lg design-card overflow-clip border-collapse group/card border transition-all duration-1000 {unit.selected ? 'border-2 border-white' : 'border-1'}">
       <!-- Image Container -->
       <div class="object-cover overflow-hidden cursor-pointer">
-        <img class="transition duration-1000 transform m-w-full group-hover/card:scale-105" src={unit.design_artwork.url} alt={unit.design_name.text} />
+        <img class="transition duration-1000 transform m-w-full group-hover/card:scale-[102%]" src={unit.design_artwork.url} alt={unit.design_name.text} />
       </div>
       <div class="flex flex-row justify-center p-3 bg-white">
       <!-- Button UI for Zoom/Select

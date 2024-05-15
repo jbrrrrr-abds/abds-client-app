@@ -5,6 +5,7 @@
   import { Header } from "$lib/components/Header";
   import { Footer } from "$lib/components/Footer";
 	import type { SupabaseClient, Session } from "@supabase/supabase-js";
+	import { redirect } from "@sveltejs/kit";
 
   export let data: { supabase: SupabaseClient, session: Session, prismic: any }
 
