@@ -4,6 +4,7 @@
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte'
   import { createBrowserClient, createServerClient, isBrowser, parse } from '@supabase/ssr'
   import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
+  import { goto } from '$app/navigation'
   import { redirect } from '@sveltejs/kit'
   import type { SupabaseClient } from '@supabase/supabase-js'
 
@@ -14,7 +15,7 @@
 
     const { error } = await supabase.auth.signOut();
     console.log(error);
-    redirect(302, './login')
+    goto('./login')
   }
 </script>
 
@@ -31,7 +32,7 @@
       {#if data.session }
         <NavLi href="#" on:click={() => logout()} class="text-base text-white">Log Out</NavLi>
       {:else}
-        <NavLi href="#" on:click={() => redirect(302, '/login')} class="text-base text-white">Log In</NavLi>
+        <NavLi href="./login" on:click={() => redirect(302, '/login')} class="text-base text-white">Log In</NavLi>
       {/if}
     </NavUl>
   </Navbar>
