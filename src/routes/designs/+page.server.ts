@@ -17,8 +17,6 @@ export async function load({ parent, cookies, locals })  {
     data,
     designArchive,
   }
-
-
 }
 
 export const actions: Actions = {
@@ -28,20 +26,21 @@ export const actions: Actions = {
     const sbTable = 'client-design-submissions'
 
     const sbData = {
-      company: formData.get('company'),
-      sender_notes: formData.get('notes'),
-      designs: formData.get('selectedDesigns'),
-      account_email: formData.get('accountEmail'),
+      company: formData.get('company') as string,
+      sender_notes: formData.get('notes') as string,
+      sender_email: formData.get('email') as string,
+      designs: JSON.parse(formData.get('selectedDesigns') as string),
+      account_email: formData.get('accountEmail') as string,
     }
-    console.log(formData);
 
     async function postEntry() {
-      const { data, error } = await supabase.from(sbTable).upsert('a');
+      const { data, error } = await supabase.from(sbTable).upsert(sbData);
       if (error) {
         console.log('Error posting data:', error)
         return
       }
       console.log('Entry posted successfully:', data)
     }
+    postEntry();
   }
 }

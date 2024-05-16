@@ -15,12 +15,14 @@
     designArchive?: any,
     prismicUser?: {
       company: string,
+      accountEmail: string,
       prismicSlug: string
     }
   }
 
   export let data: PageData
   const client: PrismicObject = data.data
+  $: stringifiedSelects = JSON.stringify($selectedDesigns)
 
   const removeDesign = async (index: number) => {
     const targetDesign = $selectedDesigns[index];
@@ -87,9 +89,9 @@
       await applyAction(result)
     }
   }}>
-    <input type="hidden" name="selectedDesigns" bind:value={$selectedDesigns}/>
+    <input type="hidden" name="selectedDesigns" bind:value={stringifiedSelects}/>
     <input type="hidden" name="company" bind:value={client.data.prismicUser.company}>
-    <input type="hidden" name="accountEmail" bind:value={client.data.session.email} />
+    <input type="hidden" name="accountEmail" bind:value={client.data.session.user.email} />
     <div class="relative flex flex-col justify-between min-h-screen">
       <div class="mt-6">
         <CloseButton on:click={() => (hiddenBackdropTrue = true)} class="absolute mb-4 right-1 top-1 text-brandWhite" />

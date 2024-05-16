@@ -9,7 +9,11 @@ declare global {
 		interface PageData {
 			session: Session | null;
 			user?: User | null;
-      prismic?: any
+      prismic?: {
+        company: string,
+        prismicSlug: string,
+        email: string
+      }
 		}
 		// interface Error {}
 		// interface Platform {}

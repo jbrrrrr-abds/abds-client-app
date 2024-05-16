@@ -38,10 +38,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 			// JWT validation has failed
 			return { session: null, user: null };
 		}
-    let prismic;
+    let prismic: { accountEmail?: string, data?: any, error?: any} = {};
     // query Supabase to get the Prismic slug on the auth'd user account
     if (user && user.role === 'authenticated') {
       prismic = await event.locals.supabase.from('users').select("prismicSlug, company").eq("email", user?.email);
+      prismic.accountEmail = user.email
     }
 
 		return { session, user, prismic };
