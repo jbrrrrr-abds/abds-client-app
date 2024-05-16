@@ -1,14 +1,12 @@
 <script lang="ts">
   import MaterialSymbolsLightFavoriteOutline from '~icons/material-symbols-light/favorite-outline';
   import MaterialSymbolsLightFavorite from '~icons/material-symbols-light/favorite';
-  //import MaterialSymbolsLightZoomInRounded from '~icons/material-symbols-light/zoom-in-rounded';
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
 
   export let client;
 
   const selectUnit = (unit: any ) => {
-    console.log(unit);
     const name = unit.design_name[0].text;
     if (unit.selected == true) {
       unit.selected = false;

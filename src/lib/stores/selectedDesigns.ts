@@ -5,6 +5,7 @@ type DesignUnit = {
   // define the properties of a design unit
   name: string;
   unit?: {
+    selected: boolean,
     design_name: {
       text: string
     }

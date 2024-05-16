@@ -4,14 +4,32 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
   import CarbonCloseFilled from '~icons/carbon/close-filled';
+  import { Drawer, Button as fbButton, CloseButton } from 'flowbite-svelte'
+  import { sineIn } from 'svelte/easing';
+  import type { DrawerOptions, DrawerInterface } from 'flowbite';
+  import type { InstanceOptions } from 'flowbite';
 
   type PrismicObject = {
     data?: any,
+    designArchive?: any
   }
 
-  export let data: PageData;
-
+  export let data: PageData
   const client: PrismicObject = data.data
+
+  const removeDesign = async (index: number) => {
+    const targetDesign = $selectedDesigns[index];
+    if (targetDesign && targetDesign.unit) targetDesign.unit.selected = false;
+    $selectedDesigns = $selectedDesigns.filter((_: any, i: number) => i !== index);
+  }
+
+  // mobile panel
+  let hiddenBackdropTrue = true;
+  let transitionParamsRight = {
+    x: 360,
+    duration: 300,
+    easing: sineIn
+  };
 </script>
 <div class="w-full">
   <div class="w-full lg:w-[calc(100vw-450px)] mb-6">
@@ -26,20 +44,20 @@
       <div class="sticky flex flex-col justify-between w-full top-4">
         <div class="w-full px-4 py-2 bg-white top-2">
           <div class="text-sm text-brandBlack-500">
-            <h2 class="py-2 text-xl text-left uppercase text-brandBlack">Your Selections</h2>
-            <div class="grid grid-cols-5 gap-4 my-2">
+            <h2 class="pt-2 pb-1 text-xl text-left uppercase text-brandBlack">Your Selections</h2>
+            <div class="grid grid-cols-5 gap-4 my-4">
               {#each $selectedDesigns as d, i}
-                <div class="relative col-span-1">
+                <button class="relative col-span-1 border cursor-pointer bg-black-200" on:click={() => removeDesign(i)}>
                   <img src="{d.unit?.design_artwork.url}" alt="d.unit?.design_name.text">
-                  <div class="absolute opacity-90 inline text-sm text-white top-[-4px] right-[-4px] bg-black rounded-full">
+                  <div class="absolute inline text-sm text-white top-[-4px] right-[-4px] bg-black rounded-full">
                     <CarbonCloseFilled class=""/>
                   </div>
-                </div>
+                </button>
               {/each}
             </div>
           </div>
           <div class="flex flex-col p-2 pt-4 mt-2 border-t border-brandBlack-100 content-flex-end">
-              <Button class="px-4 py-2 m-0 text-xl tracking-wide text-white uppercase rounded-none bg-gold font-Anton" disabled={$selectedDesigns.length == 0}>
+              <Button class="px-4 py-2 m-0 text-xl tracking-wide text-white uppercase rounded-none bg-gold font-Anton" on:click={() => (hiddenBackdropTrue = false)} disabled={$selectedDesigns.length == 0}>
                 {$selectedDesigns.length == 0 ? 'None Selected' : 'Continue'}
               </Button>
           </div>
@@ -47,5 +65,32 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Submission sidebar panel -->
+  <Drawer backdrop={true} placement="right" transitionType="fly" class="p-0 text-white shadow-lg bg-brandBlack shadow-black" transitionParams={transitionParamsRight} bind:hidden={hiddenBackdropTrue} id="submitPanel">
+  <form>
+    <div class="relative flex flex-col justify-between min-h-screen">
+      <div class="mt-6">
+        <CloseButton on:click={() => (hiddenBackdropTrue = true)} class="absolute mb-4 right-1 top-1 text-brandWhite" />
+        <h5 id="drawer-label" class="px-4 mt-6 mb-4 tracking-wide text-white uppercase text-xxxl font-Anton">Send It In</h5>
+        <p class="px-4 mb-6 text-sm text-white">
+          Please enter your name and email address, as well as any notes you'd like to include.
+          <br /><br />
+          We'll send you a copy for reference.
+        </p>
+      </div>
+      <div class="px-4 grow">
+        <input type="text" name="name" placeholder="name">
+        <input type="email" name="email" placeholder="email address">
+        <input type="textarea" name="notes" placeholder="enter any notes about these designs">
+      </div>
+
+      <div class="p-4 mt-8">
+        <Button href="/" class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-black hover:text-white">Submit</Button>
+      </div>
+      </div>
+    </form>
+  </Drawer>
 </div>
 
