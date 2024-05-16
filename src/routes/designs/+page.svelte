@@ -6,7 +6,10 @@
   import CarbonCloseFilled from '~icons/carbon/close-filled';
   import { Drawer, Button as CloseButton, Input, Label, InputAddon, ButtonGroup, Textarea } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
-  import LetsIconsUserAltLight from '~icons/lets-icons/user-alt-light';
+  import type { ButtonType } from 'flowbite-svelte'
+	import { invalidateAll, goto } from '$app/navigation';
+	import { applyAction, deserialize } from '$app/forms';
+  import type { ActionResult } from '@sveltejs/kit'
 
   type PrismicObject = {
     data?: any,
@@ -29,7 +32,26 @@
     duration: 300,
     easing: sineIn
   };
+
+  const sendRequest = async (event: { currentTarget: EventTarget & HTMLFormElement}) => {
+    const data = new FormData(event.currentTarget)
+    const response = await fetch(event.currentTarget.action, {
+      method: 'POST',
+      body: data
+    })
+
+    const result: ActionResult = deserialize(await response.text())
+
+    if (result.type === 'success') {
+      await invalidateAll();
+    }
+
+    applyAction(result);
+  }
+
+  export let submitBtn: ButtonType = 'submit'
 </script>
+
 <div class="w-full">
   <div class="w-full lg:w-[calc(100vw-450px)] mb-6">
     <h1 class="mb-4 text-xxxl">Design Archive</h1>
@@ -68,15 +90,14 @@
 
   <!-- Submission sidebar panel -->
   <Drawer backdrop={true} placement="right" transitionType="fly" class="p-0 text-white shadow-lg bg-brandBlack shadow-black" transitionParams={transitionParamsRight} bind:hidden={hiddenBackdropTrue} id="submitPanel">
-  <form>
+  <form method="POST" on:submit|preventDefault={sendRequest}>
+    <input type="hidden" name="selectedDesigns" bind:value={$selectedDesigns}/>
     <div class="relative flex flex-col justify-between min-h-screen">
       <div class="mt-6">
         <CloseButton on:click={() => (hiddenBackdropTrue = true)} class="absolute mb-4 right-1 top-1 text-brandWhite" />
         <h5 id="drawer-label" class="px-6 mt-6 mb-8 tracking-wide text-white uppercase text-xxxl font-Anton">Send It In!</h5>
         <p class="px-6 mb-6 text-sm text-white">
           Please enter your name and email address, as well as any notes you'd like to include.
-          <br /><br />
-          We'll send you a copy for reference.
         </p>
       </div>
       <div class="px-6 grow">
@@ -97,7 +118,7 @@
       </div>
 
       <div class="px-6 py-4 mt-8">
-        <Button href="/" class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-black hover:text-white">Submit</Button>
+        <Button class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-black hover:text-white" type={submitBtn}>Submit</Button>
       </div>
       </div>
     </form>
