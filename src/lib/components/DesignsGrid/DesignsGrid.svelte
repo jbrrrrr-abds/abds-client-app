@@ -35,7 +35,7 @@
             Zoom
           </Button>
         -->
-        <Button variant="outline" class="h-auto border-brandBlack-100 px-3 py-2 border font-bold uppercase transition-colors ease-in-out rounded-full text-xs font-weight-bold group/button {unit.selected ? 'bg-gold text-white' : 'bg-white'}" on:click={() =>selectUnit(unit)}>
+        <Button variant="outline" class="h-auto border-brandBlack-100 px-3 py-2 border font-bold uppercase transition-colors ease-in-out rounded-full text-xs font-weight-bold group/button {unit.selected ? 'bg-gold-100 text-white hover:bg-gold hover:text-white' : 'bg-white'}" on:click={() =>selectUnit(unit)}>
           {unit.selected ? 'Selected': 'Select'}
         </Button>
       </div>

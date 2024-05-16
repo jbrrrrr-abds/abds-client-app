@@ -47,7 +47,11 @@ export default {
           100: "#f0eee3",
           50: "#f8f7f2",
         },
-        gold: "#b48645",
+        gold: {
+          DEFAULT: "#b48645",
+          "100": "#cfb38c",
+          "900": "#694e28",
+        },
         lightGray: "#646464",
         goldUI: "hsl(var(--goldUI))",
         "goldUI-foreground": "hsl(var(--warning-foreground))",

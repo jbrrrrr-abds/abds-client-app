@@ -4,7 +4,7 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
   import CarbonCloseFilled from '~icons/carbon/close-filled';
-  import { Drawer, Button as CloseButton, Input, Label, InputAddon, ButtonGroup, Textarea } from 'flowbite-svelte'
+  import { Drawer, Button as CloseButton, Input, Label, Textarea, Modal } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
   import type { ButtonType } from 'flowbite-svelte'
 	import { invalidateAll, goto } from '$app/navigation';
@@ -102,23 +102,23 @@
       </div>
       <div class="px-6 grow">
         <div class="mb-6">
-          <label for="name" class="block mb-2 text-xs font-black uppercase">Name</label>
+          <Label for="name" class="block mb-1 text-xs font-black text-white uppercase opacity-60">Name</Label>
           <Input type="text" class="p-2 my-1 placeholder-gray-400" id="name" name="name" placeholder="enter your name" />
         </div>
 
         <div class="mb-6">
-          <label for="Email" class="block mb-2 text-xs font-black uppercase">Email</label>
+          <Label for="Email" class="block mb-1 text-xs font-black text-white uppercase opacity-60">Email</Label>
           <Input type="email" id="email" class="p-2 my-1 placeholder-gray-400" name="email" placeholder="email@company.com" required/>
         </div>
 
         <div class="mb-6">
-          <label for="notes" class="block mb-2 text-xs font-black uppercase">Notes</label>
+          <Label for="notes" class="block mb-1 text-xs font-black text-white uppercase opacity-60">Notes</Label>
           <Textarea id="notes" name="notes" class="p-2 placeholder-gray-400" rows="4" placeholder="any additional notes or comments" />
         </div>
       </div>
 
       <div class="px-6 py-4 mt-8">
-        <Button class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-black hover:text-white" type={submitBtn}>Submit</Button>
+        <Button class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-gold-100 hover:text-white" type={submitBtn}>Submit</Button>
       </div>
       </div>
     </form>

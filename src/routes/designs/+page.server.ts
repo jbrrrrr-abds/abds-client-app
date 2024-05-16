@@ -28,9 +28,6 @@ export const actions: Actions = {
     const supabase = await locals.supabase;
     const formData = await request.formData();
 
-    console.log(supabase);
-    console.log(formData);
-
     const message = 'success'
 
     return message;
