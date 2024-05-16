@@ -4,10 +4,9 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
   import CarbonCloseFilled from '~icons/carbon/close-filled';
-  import { Drawer, Button as fbButton, CloseButton } from 'flowbite-svelte'
+  import { Drawer, Button as CloseButton, Input, Label, InputAddon, ButtonGroup, Textarea } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
-  import type { DrawerOptions, DrawerInterface } from 'flowbite';
-  import type { InstanceOptions } from 'flowbite';
+  import LetsIconsUserAltLight from '~icons/lets-icons/user-alt-light';
 
   type PrismicObject = {
     data?: any,
@@ -73,20 +72,31 @@
     <div class="relative flex flex-col justify-between min-h-screen">
       <div class="mt-6">
         <CloseButton on:click={() => (hiddenBackdropTrue = true)} class="absolute mb-4 right-1 top-1 text-brandWhite" />
-        <h5 id="drawer-label" class="px-4 mt-6 mb-4 tracking-wide text-white uppercase text-xxxl font-Anton">Send It In</h5>
-        <p class="px-4 mb-6 text-sm text-white">
+        <h5 id="drawer-label" class="px-6 mt-6 mb-8 tracking-wide text-white uppercase text-xxxl font-Anton">Send It In!</h5>
+        <p class="px-6 mb-6 text-sm text-white">
           Please enter your name and email address, as well as any notes you'd like to include.
           <br /><br />
           We'll send you a copy for reference.
         </p>
       </div>
-      <div class="px-4 grow">
-        <input type="text" name="name" placeholder="name">
-        <input type="email" name="email" placeholder="email address">
-        <input type="textarea" name="notes" placeholder="enter any notes about these designs">
+      <div class="px-6 grow">
+        <div class="mb-6">
+          <label for="name" class="block mb-2 text-xs font-black uppercase">Name</label>
+          <Input type="text" class="p-2 my-1 placeholder-gray-400" id="name" name="name" placeholder="enter your name" />
+        </div>
+
+        <div class="mb-6">
+          <label for="Email" class="block mb-2 text-xs font-black uppercase">Email</label>
+          <Input type="email" id="email" class="p-2 my-1 placeholder-gray-400" name="email" placeholder="email@company.com" required/>
+        </div>
+
+        <div class="mb-6">
+          <label for="notes" class="block mb-2 text-xs font-black uppercase">Notes</label>
+          <Textarea id="notes" name="notes" class="p-2 placeholder-gray-400" rows="4" placeholder="any additional notes or comments" />
+        </div>
       </div>
 
-      <div class="p-4 mt-8">
+      <div class="px-6 py-4 mt-8">
         <Button href="/" class="w-full px-2 py-8 text-white uppercase rounded-none bg-gold font-Anton text-xxl hover:bg-black hover:text-white">Submit</Button>
       </div>
       </div>
