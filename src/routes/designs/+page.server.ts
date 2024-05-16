@@ -15,9 +15,10 @@ export async function load({ parent, cookies, locals })  {
 
   //console.log('design page server');
   //console.log(locals);
+  console.log(data.prismicUser);
   return {
     data,
-    designArchive
+    designArchive,
   }
 
 

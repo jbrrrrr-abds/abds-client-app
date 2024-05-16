@@ -13,7 +13,11 @@
 
   type PrismicObject = {
     data?: any,
-    designArchive?: any
+    designArchive?: any,
+    prismicUser?: {
+      company: string,
+      prismicSlug: string
+    }
   }
 
   export let data: PageData
@@ -54,7 +58,9 @@
 
 <div class="w-full">
   <div class="w-full lg:w-[calc(100vw-450px)] mb-6">
-    <h1 class="mb-4 text-xxxl">Design Archive</h1>
+    <h1 class="mb-4 text-xxxl">
+      {client.data.prismicUser ? client.data.prismicUser.company + ' ' : ''}Design Archive
+    </h1>
     <p class="text-brandBlack">Select designs from your archive of previous styles.  We'll include them in your future product orders.</p>
   </div>
   <div class="flex flex-row">

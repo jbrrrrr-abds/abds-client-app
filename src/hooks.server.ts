@@ -41,7 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     let prismic;
     // query Supabase to get the Prismic slug on the auth'd user account
     if (user && user.role === 'authenticated') {
-      prismic = await event.locals.supabase.from('users').select("prismicSlug").eq("email", user?.email);
+      prismic = await event.locals.supabase.from('users').select("prismicSlug, company").eq("email", user?.email);
     }
 
 		return { session, user, prismic };
