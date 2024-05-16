@@ -4,12 +4,11 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
   import CarbonCloseFilled from '~icons/carbon/close-filled';
+  import { enhance } from '$app/forms'; // Import the enhance action
   import { Drawer, Button as CloseButton, Input, Label, Textarea, Modal } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
   import type { ButtonType } from 'flowbite-svelte'
-	import { invalidateAll, goto } from '$app/navigation';
-	import { applyAction, deserialize } from '$app/forms';
-  import type { ActionResult } from '@sveltejs/kit'
+	import { applyAction } from '$app/forms';
 
   type PrismicObject = {
     data?: any,
@@ -36,22 +35,6 @@
     duration: 300,
     easing: sineIn
   };
-
-  const sendRequest = async (event: { currentTarget: EventTarget & HTMLFormElement}) => {
-    const data = new FormData(event.currentTarget)
-    const response = await fetch(event.currentTarget.action, {
-      method: 'POST',
-      body: data
-    })
-
-    const result: ActionResult = deserialize(await response.text())
-
-    if (result.type === 'success') {
-      await invalidateAll();
-    }
-
-    applyAction(result);
-  }
 
   export let submitBtn: ButtonType = 'submit'
 </script>
@@ -96,8 +79,17 @@
 
   <!-- Submission sidebar panel -->
   <Drawer backdrop={true} placement="right" transitionType="fly" class="p-0 text-white shadow-lg bg-brandBlack shadow-black" transitionParams={transitionParamsRight} bind:hidden={hiddenBackdropTrue} id="submitPanel">
-  <form method="POST" on:submit|preventDefault={sendRequest}>
+  <form method="POST" action="?/submit" use:enhance={({ formElement, formData, action, cancel }) => {
+    return async ({ result }) => {
+      if (result.type === 'redirect') {
+        // stuff
+      }
+      await applyAction(result)
+    }
+  }}>
     <input type="hidden" name="selectedDesigns" bind:value={$selectedDesigns}/>
+    <input type="hidden" name="company" bind:value={client.data.prismicUser.company}>
+    <input type="hidden" name="accountEmail" bind:value={client.data.session.email} />
     <div class="relative flex flex-col justify-between min-h-screen">
       <div class="mt-6">
         <CloseButton on:click={() => (hiddenBackdropTrue = true)} class="absolute mb-4 right-1 top-1 text-brandWhite" />
