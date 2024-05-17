@@ -11,7 +11,6 @@
   import { Drawer, Button as CloseButton, Input, Label, Textarea, Modal } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
   import type { ButtonType } from 'flowbite-svelte'
-	import { applyAction } from '$app/forms';
 
   type PrismicObject = {
     data?: any,
@@ -27,10 +26,20 @@
   const client: PrismicObject = data.data
   $: stringifiedSelects = JSON.stringify($selectedDesigns)
 
-  const removeDesign = async (index: number) => {
-    const targetDesign = $selectedDesigns[index];
-    if (targetDesign && targetDesign.unit) targetDesign.unit.selected = false;
-    $selectedDesigns = $selectedDesigns.filter((_: any, i: number) => i !== index);
+  let targetDesign: any = {
+    obj: null,
+    index: null
+  }
+
+  const findDesignToRemove = async (index: number) => {
+    targetDesign.index = index;
+    targetDesign.obj = $selectedDesigns[index];
+    $modalState.deleteModal = true
+  }
+
+  const removeDesign = async () => {
+    if (targetDesign.obj && targetDesign.obj.unit) targetDesign.obj.unit.selected = false;
+    $selectedDesigns = $selectedDesigns.filter((_: any, i: number) => i !== targetDesign.index);
   }
 
   // mobile panel
@@ -41,8 +50,14 @@
     easing: sineIn
   };
 
+  const resetSelections = () => {
+    $selectedDesigns = [];
+    client.designArchive.data.design_unit.forEach((d: any) => {
+      d.selected = false
+    })
+  }
+
   export let submitBtn: ButtonType = 'submit'
-  $modalState.errorModal = true
 </script>
 
 <div class="w-full">
@@ -63,7 +78,8 @@
             <h2 class="pt-2 pb-1 text-xl text-left uppercase text-brandBlack">Your Selections</h2>
             <div class="grid grid-cols-5 gap-4 my-4">
               {#each $selectedDesigns as d, i}
-                <button class="relative col-span-1 border cursor-pointer bg-black-200" on:click={() => removeDesign(i)}>
+              <!-- on:click={() => removeDesign(i)} -->
+                <button class="relative col-span-1 border cursor-pointer bg-black-200" on:click={() => findDesignToRemove(i)}>
                   <img src="{d.unit?.design_artwork.url}" alt="d.unit?.design_name.text">
                   <div class="absolute inline text-sm text-white top-[-4px] right-[-4px] bg-black rounded-full">
                     <CarbonCloseFilled class=""/>
@@ -85,12 +101,17 @@
 
   <!-- Submission sidebar panel -->
   <Drawer backdrop={true} placement="right" transitionType="fly" class="p-0 text-white shadow-lg bg-brandBlack shadow-black" transitionParams={transitionParamsRight} bind:hidden={hiddenBackdropTrue} id="submitPanel">
-  <form method="POST" action="?/submit" use:enhance={({ formElement, formData, action, cancel }) => {
+  <form method="POST" action="?/submit" use:enhance={() => {
     return async ({ result }) => {
-      if (result.type === 'redirect') {
-        // stuff
+      console.log(result)
+      if (result.status === 204) {
+        $modalState.successModal = true
+        hiddenBackdropTrue = true
+        resetSelections();
+      } else {
+        $modalState.errorModal = true
+        hiddenBackdropTrue = true
       }
-      await applyAction(result)
     }
   }}>
     <input type="hidden" name="selectedDesigns" bind:value={stringifiedSelects}/>
@@ -128,8 +149,9 @@
     </form>
   </Drawer>
 
+  <!-- don't render until store values are set-->
   <!-- Modal to confirm removing item from selected list -->
-  <Modal bind:open={$modalState.deleteModal} size="xs" autoclose dismissable={false} class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+  <Modal bind:open={$modalState.deleteModal} size="xs" autoclose dismissable={false} class="text-white rounded-none shadow-lg x-cloak text-md bg-brandBlack shadow-black/50n">
     <h2 class="pb-4 text-center text-xxl">
       <BitcoinIconsAlertCircleFilled class="inline top-[-2px] relative" />
       Remove this design?
@@ -139,14 +161,14 @@
         Cancel
       </Button>
 
-      <Button class="w-1/4 text-sm font-bold text-white uppercase transition rounded-none bg-gold hover:bg-gold-900">
+      <Button class="w-1/4 text-sm font-bold text-white uppercase transition rounded-none bg-gold hover:bg-gold-900" on:click={() => removeDesign()}>
         Yes
       </Button>
     </div>
   </Modal>
 
   <!-- Modal to on error in submission -->
-  <Modal bind:open={$modalState.errorModal} size="xs" autoclose dismissable={false} outsideclose class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+  <Modal bind:open={$modalState.errorModal} size="xs" autoclose dismissable={false} outsideclose class="text-white rounded-none shadow-lg x-cloak text-md bg-brandBlack shadow-black/50n">
     <h2 class="text-xxl">
       <BitcoinIconsAlertCircleFilled class="inline top-[-2px] relative" />
       Something went wrong
@@ -160,7 +182,7 @@
   </Modal>
 
   <!-- Modal on successful submission-->
-  <Modal bind:open={$modalState.successModal} autoclose outsideclose dismissable={false} class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+  <Modal bind:open={$modalState.successModal} autoclose outsideclose dismissable={false} class="text-white rounded-none shadow-lg x-cloak text-md bg-brandBlack shadow-black/50n">
     <h2 class="text-xxl">
       <EpSuccessFilled class="inline top-[-2px] relative mr-2" />Thanks for your selection!
     </h2>

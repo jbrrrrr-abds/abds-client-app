@@ -20,6 +20,7 @@ export async function load({ parent, cookies, locals })  {
   }
 }
 
+
 export const actions: Actions = {
   submit: async ({ request, locals }) => {
     const supabase = await locals.supabase;
@@ -39,9 +40,17 @@ export const actions: Actions = {
         .insert(sbData).select();
       if (error) {
         console.log('Error posting data:', error)
-        return
+        return {
+          status: 405,
+          success: false,
+        }
       }
+
       console.log('Entry post success - data:', data)
+      return {
+        status: 500,
+        success: true,
+      }
     }
     postEntry();
   }
