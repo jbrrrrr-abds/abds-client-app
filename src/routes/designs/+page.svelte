@@ -3,8 +3,11 @@
   import { DesignsGrid } from '$lib/components/DesignsGrid';
   import { Button } from "$lib/components/ui/button/index.js";
   import { selectedDesigns } from '$lib/stores/selectedDesigns'
+  import { modalState } from '$lib/stores/modalState'
   import CarbonCloseFilled from '~icons/carbon/close-filled';
-  import { enhance } from '$app/forms'; // Import the enhance action
+  import BitcoinIconsAlertCircleFilled from '~icons/bitcoin-icons/alert-circle-filled';
+  import EpSuccessFilled from '~icons/ep/success-filled';
+  import { enhance } from '$app/forms';
   import { Drawer, Button as CloseButton, Input, Label, Textarea, Modal } from 'flowbite-svelte'
   import { sineIn } from 'svelte/easing';
   import type { ButtonType } from 'flowbite-svelte'
@@ -39,6 +42,7 @@
   };
 
   export let submitBtn: ButtonType = 'submit'
+  $modalState.errorModal = true
 </script>
 
 <div class="w-full">
@@ -123,5 +127,49 @@
       </div>
     </form>
   </Drawer>
+
+  <!-- Modal to confirm removing item from selected list -->
+  <Modal bind:open={$modalState.deleteModal} size="xs" autoclose dismissable={false} class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+    <h2 class="pb-4 text-center text-xxl">
+      <BitcoinIconsAlertCircleFilled class="inline top-[-2px] relative" />
+      Remove this design?
+    </h2>
+    <div class="flex flex-row justify-center w-full space-x-5">
+      <Button variant="outline" class="w-1/4 text-sm font-bold text-white uppercase transition bg-transparent rounded-none hover:bg-gold-100">
+        Cancel
+      </Button>
+
+      <Button class="w-1/4 text-sm font-bold text-white uppercase transition rounded-none bg-gold hover:bg-gold-900">
+        Yes
+      </Button>
+    </div>
+  </Modal>
+
+  <!-- Modal to on error in submission -->
+  <Modal bind:open={$modalState.errorModal} size="xs" autoclose dismissable={false} outsideclose class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+    <h2 class="text-xxl">
+      <BitcoinIconsAlertCircleFilled class="inline top-[-2px] relative" />
+      Something went wrong
+    </h2>
+    <p>An error occurred while sending your selected designs to the server.  Please try again.</p>
+    <div class="flex flex-row justify-end w-full">
+      <Button class="w-1/3 text-sm font-bold text-white uppercase transition rounded-none wfull-1 bg-gold hover:bg-gold-900">
+        OK
+      </Button>
+    </div>
+  </Modal>
+
+  <!-- Modal on successful submission-->
+  <Modal bind:open={$modalState.successModal} autoclose outsideclose dismissable={false} class="text-white rounded-none shadow-lg text-md bg-brandBlack shadow-black/50n">
+    <h2 class="text-xxl">
+      <EpSuccessFilled class="inline top-[-2px] relative mr-2" />Thanks for your selection!
+    </h2>
+    <p>Your selection was successfully submitted.  We'll review it and get back to you shortly.</p>
+    <div class="flex flex-row justify-end w-full pt-6">
+      <Button class="w-1/3 text-sm font-bold text-white uppercase transition rounded-none wfull-1 bg-gold hover:bg-gold-900">
+        OK
+      </Button>
+    </div>
+  </Modal>
 </div>
 

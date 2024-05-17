@@ -16,7 +16,9 @@
 		"slicemachine": "start-slicemachine"
 	},
 	"devDependencies": {
+		"@iconify-json/bitcoin-icons": "^1.1.0",
 		"@iconify-json/carbon": "^1.1.33",
+		"@iconify-json/ep": "^1.1.15",
 		"@iconify-json/icon-park-outline": "^1.1.15",
 		"@iconify-json/lets-icons": "^1.1.2",
 		"@iconify-json/material-symbols-light": "^1.1.20",

@@ -1,6 +1,7 @@
 import { redirect } from '@sveltejs/kit'
 import { createClient } from '$lib/prismicio';
 import type { Actions } from './$types'
+import { modalState } from '$lib/stores/modalState'
 
 export async function load({ parent, cookies, locals })  {
   const data = await parent();
@@ -34,12 +35,13 @@ export const actions: Actions = {
     }
 
     async function postEntry() {
-      const { data, error } = await supabase.from(sbTable).upsert(sbData);
+      const { data, error } = await supabase.from(sbTable)
+        .insert(sbData).select();
       if (error) {
         console.log('Error posting data:', error)
         return
       }
-      console.log('Entry posted successfully:', data)
+      console.log('Entry post success - data:', data)
     }
     postEntry();
   }
