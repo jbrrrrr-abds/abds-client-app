@@ -5,12 +5,17 @@
   export let data;
 
   onMount(() => {
-    if (!data.session) {
-      goto('./login')
-    }
+    setTimeout(() => {
+      if (!data.session) {
+        goto('./login')
+      } else {
+        goto('./designs')
+      }
+    }, 100)
   })
+
+
 </script>
 
 <div>
-  <h1>Welcome to the site</h1>
 </div>
