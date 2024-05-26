@@ -3,9 +3,13 @@ import {
 	PUBLIC_SUPABASE_ANON_KEY,
 } from "$env/static/public";
 import { createServerClient } from "@supabase/ssr";
+import type { User } from "@supabase/supabase-js";
 import type { Handle } from "@sveltejs/kit";
 import { sequence } from '@sveltejs/kit/hooks'
 
+interface ClientAppUser extends User {
+  viewAccess: boolean
+}
 
 const supabase: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(
@@ -35,19 +39,21 @@ const supabase: Handle = async ({ event, resolve }) => {
 		const {
 			data: { user },
 			error,
-		} = await event.locals.supabase.auth.getUser();
+		} = await event.locals.supabase.auth.getUser() as { data: { user: ClientAppUser }, error: any};
 		if (error) {
 			// JWT validation has failed
 			return { session: null, user: null };
 		}
 
+
+
     let prismic: { accountEmail?: string, data?: any, error?: any} = {};
     // query Supabase to get the Prismic slug on the auth'd user account
     if (user && user.role === 'authenticated') {
-      prismic = await event.locals.supabase.from('users').select("prismicSlug, company").eq("email", user?.email);
+      prismic = await event.locals.supabase.from('users').select("prismicSlug, company, viewAccess").eq("email", user?.email);
       prismic.accountEmail = user.email
+      user.viewAccess = prismic.data[0].viewAccess
     }
-
 		return { session, user, prismic };
 	};
 
@@ -59,20 +65,4 @@ const supabase: Handle = async ({ event, resolve }) => {
 	});
 };
 
-const authGuard: Handle = async ({ event, resolve }) => {
-  const { session, user } = await event.locals.safeGetSession()
-  event.locals.session = session
-  event.locals.user = user
-
-  if (!event.locals.session && event.url.pathname.startsWith('/private')) {
-    return redirect(303, '/auth')
-  }
-
-  if (event.locals.session && event.url.pathname === '/auth') {
-    return redirect(303, '/private')
-  }
-
-  return resolve(event)
-}
-
-export const handle: Handle = sequence(supabase, authGuard)
+export const handle: Handle = sequence(supabase)
