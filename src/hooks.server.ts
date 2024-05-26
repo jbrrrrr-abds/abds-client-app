@@ -4,8 +4,10 @@ import {
 } from "$env/static/public";
 import { createServerClient } from "@supabase/ssr";
 import type { Handle } from "@sveltejs/kit";
+import { sequence } from '@sveltejs/kit/hooks'
 
-export const handle: Handle = async ({ event, resolve }) => {
+
+const supabase: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(
 		PUBLIC_SUPABASE_URL,
 		PUBLIC_SUPABASE_ANON_KEY,
@@ -38,6 +40,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			// JWT validation has failed
 			return { session: null, user: null };
 		}
+
     let prismic: { accountEmail?: string, data?: any, error?: any} = {};
     // query Supabase to get the Prismic slug on the auth'd user account
     if (user && user.role === 'authenticated') {
@@ -48,9 +51,28 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return { session, user, prismic };
 	};
 
+
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {
 			return name === "content-range" || name === "x-supabase-api-version";
 		},
 	});
 };
+
+const authGuard: Handle = async ({ event, resolve }) => {
+  const { session, user } = await event.locals.safeGetSession()
+  event.locals.session = session
+  event.locals.user = user
+
+  if (!event.locals.session && event.url.pathname.startsWith('/private')) {
+    return redirect(303, '/auth')
+  }
+
+  if (event.locals.session && event.url.pathname === '/auth') {
+    return redirect(303, '/private')
+  }
+
+  return resolve(event)
+}
+
+export const handle: Handle = sequence(supabase, authGuard)
