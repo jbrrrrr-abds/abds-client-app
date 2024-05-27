@@ -4,45 +4,57 @@
 
   export let data: PageData
   const { recentSubmits } = data
-  console.log(recentSubmits.data)
 </script>
 
 <h1 class="mb-8 text-xxxl">ABDS Client Designs Admin</h1>
 
-<section>
-  <h2 class="mb-3 text-lg font-bold normal-case font-GothamSS">Recent Submissions</h2>
-  <table class="min-w-[600px] max-w-[800px]">
-    <thead>
-      <tr class="font-bold text-left text-md bg-brandBlack text-brandWhite">
-        <th class="px-3 py-1 w-[1%] whitespace-nowrap">ID</th>
-        <th class="px-3 py-1 w-[1%] whitespace-nowrap">Date</th>
-        <th class="px-3 py-1 w-[1%] whitespace-nowrap">Company</th>
-        <th class="px-3 py-1">Email</th>
-      </tr>
-    </thead>
-    {#each recentSubmits.data as s}
-      <tbody class="text-md">
-        <tr class="border-b odd:bg-white even:bg-brandWhite-300 text-brandBlack border-b-black-300">
-          <td class="px-3 py-2 my-1 w-[1%] whitespace-nowrap">
-            <a href="https://www.google.com" class="font-bold text-blue-600 underline">
-              {s.id}
-            </a>
-          </td>
-          <td class="px-3 py-2 my-1 w-[1%] whitespace-nowrap">
-            <a href="https://www.google.com" class="font-bold text-blue-600 underline">
-              <Time format="MMMM D, YYYY - h:mm A" timestamp="{s.created_at}" />
-            </a>
-          </td>
-          <td class="px-3 py-2 my-1 w-[1%] whitespace-nowrap">
-            <a href="https://www.google.com" class="font-bold text-blue-600 underline">
-              {s.company}
-            </a>
-          </td>
-          <td class="px-4 py-2 my-1">{s.sender_email}</td>
+<div class="flex flex-row space-x-16">
+  <section class="w-1/2">
+    <h2 class="mb-3 text-lg font-bold normal-case font-GothamSSMed">Search</h2>
+  </section>
+
+  <section class="w-1/2">
+    <h2 class="mb-3 text-lg font-bold normal-case font-GothamSSMed">Recent Submissions</h2>
+    <table class="w-full">
+      <thead>
+        <tr class="font-bold text-left text-md bg-brandBlack text-brandWhite">
+          <th class="px-4 py-1 w-[1%] whitespace-nowrap text-center">ID</th>
+          <th class="px-4 py-1 w-[1%] whitespace-nowrap">Date</th>
+          <th class="px-4 py-1 w-[1%] whitespace-nowrap">Company</th>
+          <th class="px-4 py-1">Email</th>
         </tr>
-      </tbody>
-    {/each}
-  </table>
-</section>
+      </thead>
+
+        <tbody class="text-sm">
+          {#each recentSubmits.data as s}
+            <tr class="transition-colors border-b cursor-pointer odd:bg-white even:bg-lightGray-50 text-brandBlack border-b-black-300 hover:bg-slate-200">
+              <td class="px-4 py-2 my-1 w-[1%] whitespace-nowrap">
+                <a href="./admin/entry/{s.id}" class="block">
+                  <div class="block w-6 py-1 font-bold text-center text-white bg-gold">
+                    {s.id}
+                  </div>
+                </a>
+              </td>
+              <td class="px-4 py-2 my-1 w-[1%] whitespace-nowrap">
+                <a href="./admin/entry/{s.id}" class="block font-bold">
+                  <Time format="YYYY/MM/DD @ h:mm A" timestamp="{s.created_at}" />
+                </a>
+              </td>
+              <td class="px-4 py-2 my-1 w-[1%] whitespace-nowrap">
+                <a href="./admin/entry/{s.id}" class="font-bold font-GothamSSBold">
+                  {s.company}
+                </a>
+              </td>
+              <td class="px-4 py-2 my-1">
+                <a href="./admin/entry/{s.id}">
+                  {s.sender_email}
+                </a>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+    </table>
+  </section>
+</div>
 
 

@@ -16,9 +16,13 @@ export default {
       fontSize: {
         "xxs": "0.5rem",
         "xs": "0.65rem",
+        "xs+": "0.7rem",
         "sm": "0.75rem",
-        "md": "0.8rem",
+        "md": "0.85rem",
+        "md+": "0.9rem",
+        "lg+": "1.3rem",
         "xxl": "1.5rem",
+        "xxl+": "1.8rem",
         "xxxl": "2rem"
       },
       colors: {
@@ -52,7 +56,20 @@ export default {
           "100": "#cfb38c",
           "900": "#694e28",
         },
-        lightGray: "#646464",
+        lightGray: {
+          DEFAULT: "#646464",
+          50: "#F6F6F6",
+          100: "#E7E7E7",
+          200: "#D1D1D1",
+          300: "#B0B0B0",
+          400: "#888888",
+          500: "#6D6D6D",
+          600: "#646464",
+          700: "#4F4F4F",
+          800: "#454545",
+          900: "#3D3D3D",
+          950: "#262626",
+        },
         goldUI: "hsl(var(--goldUI))",
         "goldUI-foreground": "hsl(var(--warning-foreground))",
         primary: {
