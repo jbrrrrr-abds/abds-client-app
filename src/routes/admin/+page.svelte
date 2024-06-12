@@ -1,6 +1,17 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import Time from "svelte-time";
+  import {
+    InstantSearch,
+    SearchBox,
+    Hits,
+    Pagination,
+    HitsPerPage,
+  } from "svelte-algolia-instantsearch";
+  import algoliasearch from "algoliasearch/lite";
+
+  const searchClient = algoliasearch("<YOUR_API_KEY>", "<YOUR_SEARCH_KEY>");
+
 
   export let data: PageData
   const { recentSubmits } = data
@@ -11,6 +22,26 @@
 <div class="flex flex-row space-x-16">
   <section class="w-1/2">
     <h2 class="mb-3 text-lg font-bold normal-case font-GothamSSMed">Search</h2>
+    <InstantSearch indexName="<YOUR_INDEX_NAME>" routing {searchClient}>
+      <SearchBox />
+
+      <div>
+        <Hits let:hit>
+          <img src={hit.author_image_url} alt={hit.author_name} />
+          {hit.post_title} by {hit.author_name}
+        </Hits>
+      </div>
+
+      <div class="flex w-full">
+        <Pagination />
+        <HitsPerPage
+          items={[
+            { value: 5, label: "Show 5 hits", default: true },
+            { value: 10, label: "Show 10 hits" },
+          ]}
+        />
+      </div>
+    </InstantSearch>
   </section>
 
   <section class="w-1/2">

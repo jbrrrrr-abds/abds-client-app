@@ -1,5 +1,7 @@
 import { redirect } from '@sveltejs/kit'
+import { getServerState } from "svelte-algolia-instantsearch";
 import type { Actions } from './$types'
+
 
 export async function load({ parent, cookies, locals })  {
   const data = await parent();
