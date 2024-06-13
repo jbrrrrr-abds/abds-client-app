@@ -1,0 +1,25 @@
+{
+	"format": "custom",
+	"id": "client_catalogs_page",
+	"label": "Client Catalogs Page",
+	"repeatable": true,
+	"status": true,
+	"json": {
+		"Main": {
+			"uid": {
+				"config": {
+					"label": "Page Slug",
+					"placeholder": "Client name, lowercase, hyphens instead of spaces (i.e. \"anderson-brothers-design-and-supply\")"
+				},
+				"type": "UID"
+			},
+			"client_name": {
+				"type": "Text",
+				"config": {
+					"label": "Client Name",
+					"placeholder": ""
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"format": "custom",
+	"id": "client_catalogs_unit",
+	"label": "Client Catalogs Unit",
+	"repeatable": true,
+	"status": true,
+	"json": {
+		"Main": {
+			"uid": {
+				"config": {
+					"label": "UID"
+				},
+				"type": "UID"
+			},
+			"name": {
+				"type": "Text",
+				"config": {
+					"label": "Name",
+					"placeholder": ""
+				}
+			}
+		}
+	}
+}
