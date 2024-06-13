@@ -10,7 +10,6 @@ export async function load({ parent, cookies })  {
   const client = createClient({ fetch, cookies })
   const slug = data.prismicUser.companies.handle
   let catalogArchive;
-  console.log('catalogs');
   try {
     catalogArchive = await client.getByUID("client_catalogs_page", slug)
   } catch (error){
