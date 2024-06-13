@@ -370,6 +370,105 @@ export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumen
 	Lang
 >;
 
+type ClientCatalogsPageDocumentDataSlicesSlice = CatalogUnitSlice;
+
+/**
+ * Content for Client Catalogs Page documents
+ */
+interface ClientCatalogsPageDocumentData {
+	/**
+	 * Client Name field in *Client Catalogs Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: client_catalogs_page.client_name
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	client_name: prismic.KeyTextField;
+
+	/**
+	 * Slice Zone field in *Client Catalogs Page*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: client_catalogs_page.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#slices
+	 */
+	slices: prismic.SliceZone<ClientCatalogsPageDocumentDataSlicesSlice>;
+}
+
+/**
+ * Client Catalogs Page document from Prismic
+ *
+ * - **API ID**: `client_catalogs_page`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ClientCatalogsPageDocument<Lang extends string = string> =
+	prismic.PrismicDocumentWithUID<
+		Simplify<ClientCatalogsPageDocumentData>,
+		'client_catalogs_page',
+		Lang
+	>;
+
+/**
+ * Content for Client Catalogs Unit documents
+ */
+interface ClientCatalogsUnitDocumentData {
+	/**
+	 * Title field in *Client Catalogs Unit*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Catalog Title for gallery view
+	 * - **API ID Path**: client_catalogs_unit.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * PDF field in *Client Catalogs Unit*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: client_catalogs_unit.pdf
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	pdf: prismic.LinkToMediaField;
+
+	/**
+	 * Thumbnail Image field in *Client Catalogs Unit*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: client_catalogs_unit.thumbnail_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	thumbnail_image: prismic.ImageField<never>;
+}
+
+/**
+ * Client Catalogs Unit document from Prismic
+ *
+ * - **API ID**: `client_catalogs_unit`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ClientCatalogsUnitDocument<Lang extends string = string> =
+	prismic.PrismicDocumentWithUID<
+		Simplify<ClientCatalogsUnitDocumentData>,
+		'client_catalogs_unit',
+		Lang
+	>;
+
 /**
  * Item in *Client Design Archive Page → Design Unit*
  */
@@ -3293,6 +3392,8 @@ export type WorkDocument<Lang extends string = string> = prismic.PrismicDocument
 
 export type AllDocumentTypes =
 	| AboutDocument
+	| ClientCatalogsPageDocument
+	| ClientCatalogsUnitDocument
 	| ClientDesignArchivePageDocument
 	| ClientDesignUnitDocument
 	| ConfirmedDocument
@@ -3310,6 +3411,33 @@ export type AllDocumentTypes =
 	| TestimonialDocument
 	| WorkDocument;
 
+/**
+ * Default variation for CatalogUnit Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CatalogUnitSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Record<string, never>,
+	never
+>;
+
+/**
+ * Slice variation for *CatalogUnit*
+ */
+type CatalogUnitSliceVariation = CatalogUnitSliceDefault;
+
+/**
+ * CatalogUnit Shared Slice
+ *
+ * - **API ID**: `catalog_unit`
+ * - **Description**: CatalogUnit
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CatalogUnitSlice = prismic.SharedSlice<'catalog_unit', CatalogUnitSliceVariation>;
+
 declare module '@prismicio/client' {
 	interface CreateClient {
 		(
@@ -3324,6 +3452,11 @@ declare module '@prismicio/client' {
 			AboutDocumentData,
 			AboutDocumentDataIntroCarouselItem,
 			AboutDocumentDataTeamMemberItem,
+			ClientCatalogsPageDocument,
+			ClientCatalogsPageDocumentData,
+			ClientCatalogsPageDocumentDataSlicesSlice,
+			ClientCatalogsUnitDocument,
+			ClientCatalogsUnitDocumentData,
 			ClientDesignArchivePageDocument,
 			ClientDesignArchivePageDocumentData,
 			ClientDesignArchivePageDocumentDataDesignUnitItem,
@@ -3373,7 +3506,10 @@ declare module '@prismicio/client' {
 			WorkDocumentDataProductGridItem,
 			WorkDocumentDataMoreWorkItem,
 			WorkDocumentDataTestimonialsItem,
-			AllDocumentTypes
+			AllDocumentTypes,
+			CatalogUnitSlice,
+			CatalogUnitSliceVariation,
+			CatalogUnitSliceDefault
 		};
 	}
 }

@@ -6,18 +6,29 @@
 	"status": true,
 	"json": {
 		"Main": {
-			"uid": {
-				"config": {
-					"label": "Page Slug",
-					"placeholder": "Client name, lowercase, hyphens instead of spaces (i.e. \"anderson-brothers-design-and-supply\")"
-				},
-				"type": "UID"
-			},
 			"client_name": {
 				"type": "Text",
 				"config": {
 					"label": "Client Name",
 					"placeholder": ""
+				}
+			},
+			"uid": {
+				"config": {
+					"label": "Supabase Company Handle",
+					"placeholder": "Copy 'handle' from Supabase -> Companies entry"
+				},
+				"type": "UID"
+			},
+			"slices": {
+				"type": "Slices",
+				"fieldset": "Slice Zone",
+				"config": {
+					"choices": {
+						"catalog_unit": {
+							"type": "SharedSlice"
+						}
+					}
 				}
 			}
 		}
