@@ -28,11 +28,12 @@
     </NavBrand>
     <NavHamburger  />
     <NavUl class="text-base uppercase font-Anton ">
+      <NavLi href="/catalogs" class="text-base text-white">Catalogs</NavLi>
       <NavLi href="/designs" class="text-base text-white">Designs</NavLi>
       {#if data.session }
         <NavLi href="#" on:click={() => logout()} class="text-base text-white">Log Out</NavLi>
       {:else}
-        <NavLi href="./login" on:click={() => redirect(302, '/login')} class="text-base text-white">Log In</NavLi>
+        <NavLi href="/login" on:click={() => redirect(302, '/login')} class="text-base text-white">Log In</NavLi>
       {/if}
     </NavUl>
   </Navbar>

@@ -8,17 +8,17 @@ export const actions: Actions = {
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    let userProfile;
+
     if (error) {
       console.error(error)
       return redirect(303, './login/unauthorized')
     } else {
       if (data.user && data.user.role === 'authenticated') {
-        const prismic = await supabase.from('users').select("prismicSlug").eq("email", data.user?.email);
-        if (prismic.data && prismic.data[0].prismicSlug.length === 0) {
-          return redirect(303, '/login/unauthorized')
-        }
+        return redirect(303, '/designs')
       }
-      return redirect(303, '/designs')
+
+      return redirect(303, './login/unauthorized')
     }
   }
 }

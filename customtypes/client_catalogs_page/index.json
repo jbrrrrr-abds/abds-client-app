@@ -20,13 +20,34 @@
 				},
 				"type": "UID"
 			},
-			"slices": {
-				"type": "Slices",
-				"fieldset": "Slice Zone",
+			"catalog_unit": {
+				"type": "Group",
 				"config": {
-					"choices": {
-						"catalog_unit": {
-							"type": "SharedSlice"
+					"label": "Catalogs Group",
+					"repeat": true,
+					"fields": {
+						"catalog_name": {
+							"type": "Text",
+							"config": {
+								"label": "Catalog Title",
+								"placeholder": ""
+							}
+						},
+						"thumbnail_image": {
+							"type": "Image",
+							"config": {
+								"label": "Thumbnail Image",
+								"constraint": {},
+								"thumbnails": []
+							}
+						},
+						"pdf_upload": {
+							"type": "Link",
+							"config": {
+								"label": "PDF Upload",
+								"placeholder": "",
+								"select": "media"
+							}
 						}
 					}
 				}

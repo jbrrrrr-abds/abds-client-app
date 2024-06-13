@@ -47,12 +47,17 @@ const supabase: Handle = async ({ event, resolve }) => {
 
 
 
-    let prismic: { accountEmail?: string, data?: any, error?: any} = {};
+    let prismic: { accountEmail?: string, data?: any, error?: any, handle?: string} = {};
     // query Supabase to get the Prismic slug on the auth'd user account
     if (user && user.role === 'authenticated') {
-      prismic = await event.locals.supabase.from('users').select("prismicSlug, company, viewAccess").eq("email", user?.email);
+      prismic = await event.locals.supabase.from('users')
+      .select(`
+        companyID,
+        companies(name, handle)
+      `)
+      .eq("id", user.id);
       prismic.accountEmail = user.email
-      user.viewAccess = prismic.data[0].viewAccess
+      user.viewAccess = true
     }
 		return { session, user, prismic };
 	};

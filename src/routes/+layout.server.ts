@@ -8,6 +8,7 @@ export const load = (async ({ locals: { safeGetSession } }) => {
     prismicUser = '';
   } else {
     prismicUser = prismic.data[0]
+    prismicUser.prismicSlug="sierra-nevada-designs"
   }
 
 	return {

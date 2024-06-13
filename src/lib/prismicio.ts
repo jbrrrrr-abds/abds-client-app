@@ -1,7 +1,7 @@
 import * as prismic from '@prismicio/client';
 import { type CreateClientConfig, enableAutoPreviews } from '@prismicio/svelte/kit';
 import config from '../../slicemachine.config.json';
-import { PUBLIC_PRISMIC_REPO } from '$env/static/public';
+import { PUBLIC_PRISMIC_DESIGNS_REPO } from '$env/static/public';
 
 /**
  * The project's Prismic repository name.
@@ -33,7 +33,7 @@ const routes: prismic.ClientConfig['routes'] = [
  * @param config - Configuration for the Prismic client.
  */
 export const createClient = ({ cookies, ...config }: CreateClientConfig = {}) => {
-	const client = prismic.createClient(PUBLIC_PRISMIC_REPO, {
+	const client = prismic.createClient(PUBLIC_PRISMIC_DESIGNS_REPO, {
 		routes,
 		...config
 	});

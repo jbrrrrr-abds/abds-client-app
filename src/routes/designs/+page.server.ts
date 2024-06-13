@@ -1,18 +1,21 @@
 import { redirect } from '@sveltejs/kit'
 import { createClient } from '$lib/prismicio';
 import type { Actions } from './$types'
-import { modalState } from '$lib/stores/modalState'
 
-export async function load({ parent, cookies, locals })  {
+export async function load({ parent, cookies })  {
   const data = await parent();
-
   if (!data.user || data.user.role !== 'authenticated') {
     return redirect(303, './login/unauthorized')
   }
+
   const client = createClient({ fetch, cookies })
-  const slug = data.prismicUser.prismicSlug;
+  const slug = data.prismicUser.companies.handle
   let designArchive;
-  designArchive = await client.getByUID("client_design_archive_page", slug);
+  try {
+    designArchive = await client.getByUID("client_design_archive_page", slug);
+  } catch (error){
+    return redirect(303, './no-results')
+  }
 
   return {
     data,
