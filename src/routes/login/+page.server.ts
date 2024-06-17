@@ -15,7 +15,7 @@ export const actions: Actions = {
       return redirect(303, './login/unauthorized')
     } else {
       if (data.user && data.user.role === 'authenticated') {
-        return redirect(303, '/home')
+        return redirect(303, '/catalogs')
       }
 
       return redirect(303, './login/unauthorized')
