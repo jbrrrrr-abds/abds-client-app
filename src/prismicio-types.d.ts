@@ -375,10 +375,20 @@ export type AboutDocument<Lang extends string = string> = prismic.PrismicDocumen
  */
 export interface ClientCatalogsPageDocumentDataCatalogUnitItem {
 	/**
-	 * Catalog Title field in *Client Catalogs Page → Catalogs Group*
+	 * PDF Upload field in *Client Catalogs Page → Catalogs Group*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: client_catalogs_page.catalog_unit[].pdf_upload
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	pdf_upload: prismic.LinkToMediaField;
+
+	/**
+	 * Display Title field in *Client Catalogs Page → Catalogs Group*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
+	 * - **Placeholder**: Title in gallery view - no need for company name
 	 * - **API ID Path**: client_catalogs_page.catalog_unit[].catalog_name
 	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
@@ -395,14 +405,34 @@ export interface ClientCatalogsPageDocumentDataCatalogUnitItem {
 	thumbnail_image: prismic.ImageField<never>;
 
 	/**
-	 * PDF Upload field in *Client Catalogs Page → Catalogs Group*
+	 * Location field in *Client Catalogs Page → Catalogs Group*
 	 *
-	 * - **Field Type**: Link to Media
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: client_catalogs_page.catalog_unit[].pdf_upload
-	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 * - **Field Type**: Text
+	 * - **Placeholder**: i.e. city + state, location name, nickname, etc.
+	 * - **API ID Path**: client_catalogs_page.catalog_unit[].location
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
 	 */
-	pdf_upload: prismic.LinkToMediaField;
+	location: prismic.KeyTextField;
+
+	/**
+	 * Year field in *Client Catalogs Page → Catalogs Group*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: Year Published
+	 * - **API ID Path**: client_catalogs_page.catalog_unit[].year
+	 * - **Documentation**: https://prismic.io/docs/field#number
+	 */
+	year: prismic.NumberField;
+
+	/**
+	 * Season/Month field in *Client Catalogs Page → Catalogs Group*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Season or Month Published
+	 * - **API ID Path**: client_catalogs_page.catalog_unit[].season
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	season: prismic.KeyTextField;
 }
 
 /**

@@ -26,11 +26,19 @@
 					"label": "Catalogs Group",
 					"repeat": true,
 					"fields": {
+						"pdf_upload": {
+							"type": "Link",
+							"config": {
+								"label": "PDF Upload",
+								"placeholder": "",
+								"select": "media"
+							}
+						},
 						"catalog_name": {
 							"type": "Text",
 							"config": {
-								"label": "Catalog Title",
-								"placeholder": ""
+								"label": "Display Title",
+								"placeholder": "Title in gallery view - no need for company name"
 							}
 						},
 						"thumbnail_image": {
@@ -41,12 +49,25 @@
 								"thumbnails": []
 							}
 						},
-						"pdf_upload": {
-							"type": "Link",
+						"location": {
+							"type": "Text",
 							"config": {
-								"label": "PDF Upload",
-								"placeholder": "",
-								"select": "media"
+								"label": "Location",
+								"placeholder": "i.e. city + state, location name, nickname, etc."
+							}
+						},
+						"year": {
+							"type": "Number",
+							"config": {
+								"label": "Year",
+								"placeholder": "Year Published"
+							}
+						},
+						"season": {
+							"type": "Text",
+							"config": {
+								"label": "Season/Month",
+								"placeholder": "Season or Month Published"
 							}
 						}
 					}
